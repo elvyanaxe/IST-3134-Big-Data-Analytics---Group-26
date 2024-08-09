@@ -21,8 +21,7 @@ precovid_30 <- postcovid_subset %>% sample_frac(0.3)
 precovid_20 <- postcovid_subset %>% sample_frac(0.2)
 precovid_10 <- postcovid_subset %>% sample_frac(0.1)
 
-# tokenize the text
-# change the variable name whenever analyzing a different subset
+# tokenize the text; the variable name is changed whenever analyzing a different subset
 tidy_reviews <- precovid_50 %>%
   unnest_tokens(word, text_)
 
