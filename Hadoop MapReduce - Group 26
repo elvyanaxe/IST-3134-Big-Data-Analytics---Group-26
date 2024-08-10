@@ -53,19 +53,19 @@
 # We examined the classpath Hadoop is configured to use.
 17) hadoop classpath
 
-# Next we compile the three java paths.
+# Next, we compiled the three Java paths.
 18) javac -classpath `hadoop classpath` stubs/*.java
 
-# We then collect the compiled java files into a JAR file.
+# We then collected the compiled Java files and put them into a JAR file.
 19) jar cvf wc.jar stubs/*.class
 
-# To count the number of appearance of each word in precovid_reviews_subset_55, we submitted a MapReduce job to Hadoop using the JAR file.
+# To count the number of appearances of each word in the dataset, we submitted a MapReduce job to Hadoop using the JAR file.
 20) hadoop jar wc.jar stubs.WordCount precovid_reviews_subset_55.csv wordcounts1
 
-# To show the results of wordcounts1.
+# We ran this code to show the word count results.
 21) hadoop fs -ls wordcounts1
 
-# To show the first 70 rows and sort in descending order of the result for wordcounts1.
+# To show the first 70 rows and sort the word count results in descending order, we ran this code so that we could identify which words has the highest frequency.
 22) hadoop fs -cat /user/hadoop/wordcounts1/part-r-00000 | sort -nr -k2 | head -n 70
 
 
