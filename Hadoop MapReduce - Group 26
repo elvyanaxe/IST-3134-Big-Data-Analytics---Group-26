@@ -62,8 +62,11 @@
 # To count the number of appearance of each word in precovid_reviews_subset_55, we submitted a MapReduce job to Hadoop using the JAR file.
 20) hadoop jar wc.jar stubs.WordCount precovid_reviews_subset_55.csv wordcounts1
 
-# To show the first 70 rows and sort in descending order of the result for wordcounts1
-21) hadoop fs -cat /user/hadoop/output001/part-r-00000 | sort -nr -k2 | head -n 70
+# To show the results of wordcounts1.
+21) hadoop fs -ls wordcounts1
+
+# To show the first 70 rows and sort in descending order of the result for wordcounts1.
+22) hadoop fs -cat /user/hadoop/wordcounts1/part-r-00000 | sort -nr -k2 | head -n 70
 
 
 
