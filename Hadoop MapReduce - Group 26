@@ -2,53 +2,72 @@
 
 # First of all, we created EC2 instances (master, slave1, slave2) from an existing AMI.
 
-sudo nano /etc/hosts
+1) sudo nano /etc/hosts
 172.31.27.188 master
 172.31.28.147 slave1
 172.31.29.250 slave2
 
 # Upon connecting to our instance, we switched our user from root to Hadoop.
-1)  sudo su - hadoop
+2)  sudo su - hadoop
 
 # Next, we ping both slave1 and slave2 to test whether all machines are set.
-2) ping slave1 and slave2
+3) ping slave1 and slave2
 
 # We then initialized the HDFS namenode, preparing it for use.
-3) hdfs namenode -format
+4) hdfs namenode -format
 
 # We started all the HDFS services, including the namenode, datanode, jobtracker, and tasktracker.
-4) start-all.sh
+5) start-all.sh
 
 # We checked whether these folders exist in the HDFS. 
-5) hadoop fs -mkdir /user
-6) hadoop fs -mkdir /user/hadoop
+6) hadoop fs -mkdir /user
+7) hadoop fs -mkdir /user/hadoop
 
 # We changed the current directory to IST3134.
-7) cd IST3134/
+8) cd IST3134/
 
 # We extracted the contents of the wordcount.zip file.
-8) unzip wordcount.zip
+9) unzip wordcount.zip
 
 # We created a workspace directory in our home directory.
-9) mkdir ~/workspace
+10) mkdir ~/workspace
 
 # We copied the wordcount directory to the workspace directory.
-10) cp -r wordcount/ ~/workspace/
+11) cp -r wordcount/ ~/workspace/
 
 # We changed the current directory to our home directory.
-11) cd ~
+12) cd ~
 
 # We downloaded the dataset file from the AWS S3 Bucket into the Hadoop directory.
-12) wget "https://basketbucketbelle.s3.amazonaws.com/precovid_reviews_subset_55.csv"
+13) wget "https://basketbucketbelle.s3.amazonaws.com/precovid_reviews_subset_55.csv"
 
 # We uploaded the dataset file to the Hadoop directory.
-13) hadoop fs -put precovid_reviews_subset_55.csv /user/hadoop/
+14) hadoop fs -put precovid_reviews_subset_55.csv /user/hadoop/
 
 # We changed the current directory to 
-14) cd ~/workspace/wordcount/src
+15) cd ~/workspace/wordcount/src
 
 # We checked the contents of the stubs package directory.
-15) ls stubs
+16) ls stubs
 
 # We examined the classpath Hadoop is configured to use.
-16) hadoop classpath
+17) hadoop classpath
+
+# Next we compile the three java paths.
+18) javac -classpath `hadoop classpath` stubs/*.java
+
+# We then collect the compiled java files into a JAR file.
+19) jar cvf wc.jar stubs/*.class
+
+# To count the number of appearance of each word in precovid_reviews_subset_55, we submitted a MapReduce job to Hadoop using the JAR file.
+20) hadoop jar wc.jar stubs.WordCount precovid_reviews_subset_55.csv wordcounts1
+
+# To show the first 70 rows and sort in descending order of the result for wordcounts1
+21) hadoop fs -cat /user/hadoop/output001/part-r-00000 | sort -nr -k2 | head -n 70
+
+
+
+
+
+
+
